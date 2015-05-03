@@ -1,0 +1,26 @@
+{
+  "name": "js-tdd",
+  "version": "1.0.0",
+  "description": "JS TDD exercise for Solnet Developers",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --watch ./test/**"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/solnetdigital/js-tdd.git"
+  },
+  "keywords": [
+    "tdd",
+    "js",
+    "mocha",
+    "chai",
+    "async-testing"
+  ],
+  "author": "rafanami",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/solnetdigital/js-tdd/issues"
+  },
+  "homepage": "https://github.com/solnetdigital/js-tdd#readme"
+}
