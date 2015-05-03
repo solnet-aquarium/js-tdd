@@ -2,7 +2,8 @@
  * Test imports
  */
 var chai = require('chai');
-var should = require('chai').should();
+var should = require('chai').should(),
+    expect = require('chai').expect;
 
 /**
  * First version - creating a mongodb simple API using callbacks
@@ -25,6 +26,16 @@ describe('mongodb api testing', function () {
   it('should insert a document to mongodb', function(done) {
     client.connect(url, function(err, db) {
       db.collection('users').insertOne({username:'admin', password:'admin'}, function(err, result) {
+        expect(err).to.be.null;
+        result.should.be.ok;
+        done();
+      });
+    });
+  });
+  it('should remove all admin users from mongodb', function(done) {
+    client.connect(url, function(err, db) {
+      db.collection('users').deleteMany({username:'admin'}, function(err, result){
+        expect(err).to.be.null;
         result.should.be.ok;
         done();
       });
