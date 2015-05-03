@@ -37,7 +37,11 @@ describe('mongodb api testing', function () {
       db.collection('users').deleteMany({username:'admin'}, function(err, result){
         expect(err).to.be.null;
         result.should.be.ok;
-        done();
+        db.collection('users').findOne({username:'admin'}, function(err, result){
+          expect(err).to.be.null;
+          expect(result).to.be.null;
+          done();
+        });
       });
     });
   });
