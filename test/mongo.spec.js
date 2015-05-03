@@ -9,9 +9,17 @@ var should = require('chai').should();
  */
 var client = require('mongodb').MongoClient;
 
-describe('mongodb api testing', function() {
-  var url = 'mongodb://localhost:27017/digitalgateway';
-  it('should have the client instantiated', function(){
+describe('mongodb api testing', function () {
+  var url = 'mongodb://localhost:27017/digitalgateway',
+      connect;
+  beforeEach(function (done) {
+    connect = client.connect(url, function (err, db) {
+      db.should.be.defined;
+      db.close();
+      done();
+    });
+  });
+  it('should have the client instantiated', function () {
     client.should.be.defined;
   });
 });
