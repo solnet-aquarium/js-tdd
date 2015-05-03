@@ -32,6 +32,17 @@ describe('mongodb api testing', function () {
       });
     });
   });
+  it('should retrieve one document from mongodb', function(done) {
+    client.connect(url, function(err, db) {
+      db.collection('users').findOne({username: 'admin'}, function (err, result) {
+        result.should.be.ok;
+        result.should.have.property('username').equals('admin');
+        result.should.have.property('password').equals('admin');
+        result.should.have.property('_id');
+        done();
+      });
+    });
+  });
   it('should remove all admin users from mongodb', function(done) {
     client.connect(url, function(err, db) {
       db.collection('users').deleteMany({username:'admin'}, function(err, result){
