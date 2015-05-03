@@ -22,4 +22,12 @@ describe('mongodb api testing', function () {
   it('should have the client instantiated', function () {
     client.should.be.defined;
   });
+  it('should insert a document to mongodb', function(done) {
+    client.connect(url, function(err, db) {
+      db.collection('users').insertOne({username:'admin', password:'admin'}, function(err, result) {
+        result.should.be.ok;
+        done();
+      });
+    });
+  });
 });
