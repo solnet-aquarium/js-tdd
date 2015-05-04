@@ -10,7 +10,7 @@ var should = require('chai').should();
 var client = require('mongodb').MongoClient;
 
 describe('mongodb api testing', function() {
-  var url = 'mongodb://localhost:27017/digitalgateway';
+  var url = 'mongodb://localhost:27017/jdtdd';
   it('should have the client instantiated', function(){
     client.should.be.defined;
   });

@@ -45,3 +45,8 @@ defined.
 
 This is the starting point for your TDD, since every time you change the mongo.spec.js file and save, the mocha
 tests will be fired again.
+
+## Next Steps
+After the basic setup steps, it's time to start enhancing the test development cycle with baby steps, or small increments on the code.
+
+[Go to Step 1](./docs/STEP1.md)
