@@ -11,7 +11,7 @@ var should = require('chai').should(),
 var client = require('mongodb').MongoClient;
 
 describe('mongodb api testing', function () {
-  var url = 'mongodb://localhost:27017/digitalgateway',
+  var url = 'mongodb://localhost:27017/jstdd',
       connect;
   beforeEach(function (done) {
     connect = client.connect(url, function (err, db) {
