@@ -43,6 +43,28 @@ describe('mongodb api testing', function () {
       });
     });
   });
+  it('should retrieve a list of documents from mongodb', function(done){
+    client.connect(url, function(err, db){
+      db.collection('users').insertMany([{username:'user', password:'user'}, {username:'user2', password:'user2'}], function(err, result){
+        result.should.be.ok;
+        expect(err).to.be.null;
+        db.collection('users').find({username: {$regex: '^user*'}})
+            .toArray(function(err, resultFind) {
+              expect(err).to.be.null;
+              resultFind.should.have.property('length').to.equals(2);
+              resultFind[0].should.have.property('username').to.equals('user');
+              resultFind[0].should.have.property('password').to.equals('user');
+              resultFind[1].should.have.property('username').to.equals('user2');
+              resultFind[1].should.have.property('password').to.equals('user2');
+              db.collection('users').deleteMany({username: {$regex: '^user*'}}, function(err, deleteResult) {
+                expect(err).to.be.null;
+                deleteResult.should.be.ok;
+                done();
+              });
+            });
+      });
+    });
+  });
   it('should remove all admin users from mongodb', function(done) {
     client.connect(url, function(err, db) {
       db.collection('users').deleteMany({username:'admin'}, function(err, result){
