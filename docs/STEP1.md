@@ -34,7 +34,7 @@ We need to create a mongodb connection in this step. I assume that the code was 
 
 Let's start by checking the current code of `mongo.spec.js` file:
 
-```
+```javascript
 /**
  * Test imports
  */
@@ -55,7 +55,7 @@ describe('mongodb api testing', function() {
 ```
 This step is mostly to create a connection and assert if the connection is defined on the callback function.
 
-```
+```javascript
 /**
  * Test imports
  */
@@ -114,8 +114,8 @@ Now, let's insert a document to mongodb.
 
 But first things first, let's create the should block where we will place our test code.
 
-```
-... // code ommited for brevity
+```javascript
+    //...  code ommited for brevity
 	it('should insert a document to mongodb', function(done) {
 		// code will go here
 	});
@@ -131,8 +131,8 @@ Pretty self explanatory message, right?
 
 Moving on, to insert a document in mongodb, we need to be on a connection callback, to access a connected db parameter.
 
-```
-... // code ommited for brevity
+```javascript
+    // ... code ommited for brevity
 	it('should insert a document to mongodb', function(done) {
 		client.connect(url, function(err, db){ // #exp1
 			db.collection('users') // #exp2
