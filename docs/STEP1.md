@@ -47,7 +47,7 @@ var should = require('chai').should();
 var client = require('mongodb').MongoClient;
 
 describe('mongodb api testing', function() {
-  var url = 'mongodb://localhost:27017/jdtdd';
+  var url = 'mongodb://localhost:27017/jstdd';
   it('should have the client instantiated', function(){
     client.should.be.defined;
   });
@@ -68,7 +68,7 @@ var expect = require('chai').expect; // change0
  */
 describe('mongodb api testing', function() {
 	var client = require('mongodb').MongoClient,
-		url = 'mongodb://localhost:27017/jdtdd',
+		url = 'mongodb://localhost:27017/jstdd',
 		connect; // change1
 	beforeEach(function(done){ // #exp1
 		connect = client.connect(url, function(err, db) {
@@ -83,6 +83,7 @@ describe('mongodb api testing', function() {
 	});
 });
 ```
+### Explanation
 
 We added __change0__ to be able to use the expect chai construct in the testcase as well.
 
@@ -146,6 +147,8 @@ Moving on, to insert a document in mongodb, we need to be on a connection callba
 	});
 }); // describe scope end
 ```
+
+### Explanation
 In __#exp1__, we are starting the connection to make mongodb commands. These commands have to be placed on the connect function node.js callback.
 
 In __#exp2__, we are calling `db.collection` function, with the `'users'` parameter, which means that we are using the collection `users` for the next command in the chain.
@@ -159,6 +162,122 @@ And finally, in __#exp5__, we are invoking the `done()` notification function to
 Pretty simple, right? We are getting our hands dirty and seeing that our tests are working as expected.
 
 ![image](./images/step1_3_success_testResult.png)
+
+## Step 1.4 - Removing documents from mongodb
+
+That was sweet, inserting a document to mongodb. But as we did not define any indexing to our collection, every time that we execute the insertOne function, a new identical document will be inserted.
+And as a result we have this:
+
+![image](./images/step1_3_list_result.png)
+
+Not that much fun huh? 
+
+So we will add a test to call the deleteMany function on mongoDB, to delete all repeated documents from the mongo database.
+The deleteMany function have two main parameters - one is a query object (a criteria object to be used as a match to find the documents to delete), and the other parameter is the node callback that is called after executing the deleteMany function.
+
+We can start adding the following code to the bottom of the inner part of the describe scope and save:
+
+```javascript
+	// ... code ommited for brevity
+	it('should remove all users from mongodb users collection', function(done){
+	});
+}); // describe scope end
+```
+
+Don't worry - again, as we save, we will have a failed test on the report - nothing out of the ordinary here.
+
+![image](./images/step1_4_fail_testResult.png)
+
+So let's complete our test code to make it pass.
+
+```javascript
+	// ... code ommited for brevity
+	it('should remove all users from mongodb users collection', function(done){
+		client.connect(url, function (err, db) {
+			db.collection('users')
+				.deleteMany({username:'admin'}, function(err, result){ // #exp1
+					expect(err).to.be.null; // #exp2
+					result.should.be.ok; // #exp2
+					done(); // #exp3
+       	});
+	    });
+	});
+}); // describe scope end
+```
+
+### Explanation
+
+In __#exp1__, we are using the `deleteMany` function, that takes a JSON object as a query, and a node.js callback that will be executed after the function execution completes in mongodb.
+
+In __#exp2__, we are performing the normal assertions for this case, like expecting that the result parameter should be ok, and the err parameter to be null.
+
+And finally, in __#exp3__, we are invoking the `done()` notification function to end the test scenario.
+
+After performing the changes and saving, we can see that we had a different result on the test execution on the terminal.
+
+![image](./images/step1_4_success_testResult.png)
+
+Sweet! Now we have a full cycle of insertion and removal on our unit test. But what about retrieving information?
+
+## Step 1.5 - Find one document in mongoDB
+
+Right, we have one document stored in mongoDB after the insert testcase executes, that the deleteMany testcase cleans on its execution.
+
+So what about putting a test case to find the inserted document before removing it?
+
+As usual, let's go by the baby steps - add the following function right after the insert document testcase, and save:
+
+```javascript
+	// ... code ommited for brevity
+	it('should retrieve one document based on a criteria from MongoDB', function(done){
+	
+	});
+	// ... code ommited for brevity
+```
+
+We should see a failing test report, but hey - we are adding one more testcase here, so it is expected.
+
+![image](./images/step1_5_fail_testResult.png)
+
+All right, let's put the findOne code on the testcase, shall we?
+
+```javascript
+// ... code ommited for brevity
+	it('should retrieve one document based on a criteria from MongoDB', function(done){
+		client.connect(url, function (err, db) {
+			db.collection('users')
+				.findOne({username:'admin'}, function(err, result){ // #exp1
+					expect(err).to.be.null; // #exp2
+					result.should.be.ok; // #exp2
+					result.should.have.property('username')
+						.equals('admin'); // #exp2
+					result.should.have.property('password')
+						.equals('admin'); // #exp2
+					result.should.have.property('_id'); // #exp2
+					done(); // #exp3
+       	});
+	    });
+	});
+	// ... code ommited for brevity
+```
+### Explanation
+
+In __#exp1__, we are using the `findOne` function, that takes a JSON object as a criteria query, and a node.js callback that will be executed after the function execution completes in mongodb. On this node callback, the result parameter will be the exact object that we expect retrieved from mongodb.
+
+In __#exp2__, we are performing the normal assertions for this case, like expecting that the result parameter should be ok, and the err parameter to be null. In this case, as the result parameter is an actual document from mongodb, we expect that some values and properties are present, so we created more assertions for this case.
+
+And finally, in __#exp3__, we are invoking the `done()` notification function to end the test scenario.
+
+After performing the changes and saving, we can see that we had a different result on the test execution on the terminal.
+
+![image](./images/step1_5_success_testResult.png)
+
+Awesome! We just need to create one more test case - to retrieve a list of documents from mongoDB. And we will make use of regex operator of mongoDB for this feature.
+
+## Step 1.6 - Find a list of documents in mongoDB
+
+
+
 
 
 
