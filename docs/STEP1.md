@@ -132,17 +132,33 @@ Pretty self explanatory message, right?
 Moving on, to insert a document in mongodb, we need to be on a connection callback, to access a connected db parameter.
 
 ```javascript
-    // ... code ommited for brevity
+	// ... code ommited for brevity
 	it('should insert a document to mongodb', function(done) {
 		client.connect(url, function(err, db){ // #exp1
 			db.collection('users') // #exp2
-				.insertOne({username:'admin', password:'admin'}, function(err, result){ #exp3
-					result.should.be.ok; #exp4
-					expect(err).to.be.null; #exp4
-					done(); #exp5
-			});
+				.insertOne({username:'admin', password:'admin'}, function(err, result){ //#exp3
+					result.should.be.ok; //#exp4
+					expect(err).to.be.null; //#exp4
+					done(); //#exp5
+				});
 		});
 
 	});
 }); // describe scope end
 ```
+In __#exp1__, we are starting the connection to make mongodb commands. These commands have to be placed on the connect function node.js callback.
+
+In __#exp2__, we are calling `db.collection` function, with the `'users'` parameter, which means that we are using the collection `users` for the next command in the chain.
+
+In __#exp3__, we are using the `insertOne` function, that takes a JSON object as a document, and a node.js callback that will be executed after the function execution completes in mongodb.
+
+In __#exp4__, we are performing the normal assertions for this case, like expecting that the result parameter should be ok, and the err parameter to be null.
+
+And finally, in __#exp5__, we are invoking the `done()` notification function to end the test scenario.
+
+Pretty simple, right? We are getting our hands dirty and seeing that our tests are working as expected.
+
+![image](./images/step1_3_success_testResult.png)
+
+
+
