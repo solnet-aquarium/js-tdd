@@ -16,7 +16,7 @@ git clone https://github.com/solnetdigital/js-tdd.git
 Then navigate to the folder and execute the following command to install all the needed dependencies for the tutorial:
 
 ```
-npm install --save-dev
+npm install
 ```
 
 ## Step 2 - Getting started
@@ -25,28 +25,27 @@ TDD (Test Driven Development) is a very easy concept to grasp.
 
 Basically, you start creating a test for a particular feature. 
 
-If the language/tooling allow you, you should be able
-to create/change the test and have immediate feedback about the code that you're creating.
+If the language/tooling allows you, you should be able to create/change the test and have immediate feedback about the code that you're creating.
 
 In some languages this is quite challenging, since there is a full compilation/deployment cycle. But that's not the case for node/io js.
 
-So before starting to code, just execute the following command in CLI:
+So before starting to code, just execute the following command:
 
 ```
 npm test
 ```
 
-You should have a feedback just like this one:
+You should have immediate feedback just like this:
 
 ![Test result](./testResult.png)
 
-The mongo.spec.js file have just a small fixture, where it is testing if the mongodb api barebone (MongoClient) is
+The mongo.spec.js file has a small fixture, testing if the mongodb api barebone (MongoClient) is
 defined.
 
 This is the starting point for your TDD, since every time you change the mongo.spec.js file and save, the mocha
 tests will be fired again.
 
 ## Next Steps
-After the basic setup steps, it's time to start enhancing the test development cycle with baby steps, or small increments on the code.
+It's time to start enhancing the test development cycle with baby steps, or small increments on the code.
 
 [Go to Step 1](./docs/STEP1.md)
