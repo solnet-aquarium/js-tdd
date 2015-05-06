@@ -26,6 +26,7 @@
   "devDependencies": {
     "chai": "^2.3.0",
     "mocha": "^2.2.4",
+    "mongo-mock": "^1.2.8",
     "mongodb": "^2.0.28"
   }
 }
