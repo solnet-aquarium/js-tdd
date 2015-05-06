@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/solnetdigital/js-tdd/issues"
   },
-  "homepage": "https://github.com/solnetdigital/js-tdd#readme"
+  "homepage": "https://github.com/solnetdigital/js-tdd#readme",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.4",
+    "mongodb": "^2.0.28"
+  }
 }
